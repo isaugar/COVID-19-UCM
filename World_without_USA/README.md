@@ -17,4 +17,4 @@ Este directorio contiene:
 
 Ejecución de Scripts: 
 
-<b> spark-submit <direccion/nombre:script.py>< argumentos> </b>
+<b> spark-submit [direccion/nombre:script.py] </b>
