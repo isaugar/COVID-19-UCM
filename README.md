@@ -20,3 +20,4 @@ Se utilizan las siguientes funciones, para calcular los datos:
 - Forward filling = Using .pad() forward-fills the NaNs.
 
 - Interpolate = Using .interpolate() all daily rows [Only country region filter]
+
