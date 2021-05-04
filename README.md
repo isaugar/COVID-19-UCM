@@ -5,9 +5,9 @@ Este proyecto crea una BBDD partiendo de los datos anteriormente mencionados, es
 
 Este repositorio esta constituido por tres directorios:
 
-- World: Los datos de todo el mundo, agrupados por pais y región.
+- World whitout USA: Los datos de todo el mundo, agrupados por pais y región, a excepción de USA.
 
-- USA-State: los datos de USA, agrupados por estados y ciudad. 
+- USA-State: los datos de USA, agrupados por estados. 
 
 -	CountryFilter/RegionOptional: Filtro para generar los datos de un país o la región de un país en concreto. 
 
