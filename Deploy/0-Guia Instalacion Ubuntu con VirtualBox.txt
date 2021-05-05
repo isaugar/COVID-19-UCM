@@ -1,0 +1,19 @@
+1.- Primero descargar tanto la imagen de la VM de ubuntu desde el siguiente enlace de la página oficial --> https://ubuntu.com/download/desktop
+
+2.- Descargar el instalador de VirtualBox --> https://www.oracle.com/es/virtualization/technologies/vm/downloads/virtualbox-downloads.html
+
+3.- Seguir los siguientes pasos descritos en la siguiente página --> https://comoinstalar.me/como-instalar-ubuntu-20-04-focal-fossa-en-virtualbox/
+
+4.- Instalar Spark en la VM --> https://computingforgeeks.com/how-to-install-apache-spark-on-ubuntu-debian/
+
+5.- Instalar git en la VM --> sudo apt install git
+
+6.- Ejecutar el Script updateCSV.sh para actualizar o descargar de no existir el repositorio de los CSV con los datos de la JHU --> ./updateCSV.sh 
+
+- En caso de no detectar los script cambiar los permisos --> chmod 777 updateCSV.sh // chmod 777 *.py
+
+7.- Colocar los scripts en el directorio /home/<usuari>/ (CountryFilter.py;WorldWIthoutUSA.py, etc)
+
+8.- Ejecutar los Scripts que se deseen con el siguiente comando --> spark-submit <direccion y nombre script> <argumentos script>
+
+	Ejemplo --> spark-submit ./CountryFilter-NA.py Spain Madrid  [Esto ejecutará el comando que filtra por pais (Spain) y permite filtar por comunidad también (Madrid)]
