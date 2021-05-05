@@ -5,13 +5,15 @@ Este proyecto crea una BBDD partiendo de los datos anteriormente mencionados, es
 
 Este repositorio esta constituido por cuatro directorios:
 
+- Deploy: Para desplegar el entorno, contiene tutoriales y scripts.
+
 - World whitout USA: Los datos de todo el mundo, agrupados por pais y región, a excepción de USA.
 
 - USA-State: los datos de USA, agrupados por estados. 
 
 -	CountryFilter/RegionOptional: Filtro para generar los datos de un país o la región de un país en concreto. 
 
-Cada directorio a su vez esta formado por:
+Los directorios World whitout USA, USA-State, CountryFilter/RegionOptional a su vez esta formado por:
 
 - README.md con información de los scripts.
 
@@ -28,6 +30,4 @@ Funciones utilizadas:
 - Forward filling = Using .pad() forward-fills the NaNs.
 
 - Interpolate = Using .interpolate() all daily rows [Only country region filter].
-
-Se han añadido varias guías para facilitar la instalacion y preparación del entorno. 
 
