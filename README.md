@@ -3,7 +3,7 @@ Este Repositorio es una aportación al estudio analítico sobre la evolución de
 
 Este proyecto crea una BBDD partiendo de los datos anteriormente mencionados, este proceso se encarga a su vez de recopilar y calcular los datos diarios de su global, más el indice de propagación (IP). Se incorporan varios scripts permitiendo al usuario seleccionar la BBDD que más le interese, por ejemplo, interpolando los datos diarios de la región de un pais, filtrar por un unico pais, excluyendo los datos negativos en las tasas diarias... 
 
-Este repositorio esta constituido por tres directorios:
+Este repositorio esta constituido por cuatro directorios:
 
 - World whitout USA: Los datos de todo el mundo, agrupados por pais y región, a excepción de USA.
 
@@ -28,4 +28,6 @@ Funciones utilizadas:
 - Forward filling = Using .pad() forward-fills the NaNs.
 
 - Interpolate = Using .interpolate() all daily rows [Only country region filter].
+
+Adicionalmente: se creadaa
 
