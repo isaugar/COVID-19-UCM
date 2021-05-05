@@ -13,4 +13,7 @@ Este directorio contiene varios tipos de scripts para generar los ".csv" de USA.
 - Se recomienda comprobar los ejemplos para encontrar el script que mejor encaje en su estudio.
 
 - Los script generan dos tipos de .csv, el separado por (,) y separado (;).
+
+- Para ejecutar los script: sprak-submit <nombre_script>.py
+  - asegurar que el script tiene permisos de ejecución.
  
