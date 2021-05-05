@@ -64,21 +64,17 @@ pandasRet.loc[(pandasRet['Country_Region'] != pandasRet['Country_Region'].shift(
 pandasRet["IP"] = (pandasRet["Daily_Confirmed"] + pandasRet["Daily_Deaths"]) - pandasRet["Daily_Recovered"]
 
 
-
-
-
-
 #Comprobamos tipos y si se han devuelto datos
 pandasRet.info()
 
 
 #Guardamos en csv
 if state is None:
-	pandasRet.to_csv(country + "-" + time.strftime("%c") + "-semicolon"  + ".csv", sep = ';')
-	pandasRet.to_csv(country + "-" + time.strftime("%c") +"-comma" + ".csv", sep = ',')
+	pandasRet.to_csv(country + "-Negative-" + time.strftime("%c") + "-semicolon"  + ".csv", sep = ';')
+	pandasRet.to_csv(country + "-Negative-" + time.strftime("%c") +"-comma" + ".csv", sep = ',')
 else:
-	pandasRet.to_csv(country  + "-" + state + "-" + time.strftime("%c") + "-semicolon"  + ".csv", sep = ';')
-	pandasRet.to_csv(country  + "-" + state + "-" + time.strftime("%c") + "-comma"  + ".csv", sep = ',')
+	pandasRet.to_csv(country  + "-Negative-" + state + "-" + time.strftime("%c") + "-semicolon"  + ".csv", sep = ';')
+	pandasRet.to_csv(country  + "-Negative-" + state + "-" + time.strftime("%c") + "-comma"  + ".csv", sep = ',')
 
 
 
