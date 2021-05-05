@@ -69,21 +69,17 @@ pandasRes = pandasRet.loc[(pandasRet['Last_Update1'] != pandasRet['Last_Update1'
 pandasRes["IP"] = (pandasRes["Daily_Confirmed"] + pandasRes["Daily_Deaths"]) - pandasRes["Daily_Recovered"]
 
 
-
-
-
-
 #Comprobamos tipos y si se han devuelto datos
 pandasRet.info()
 
 
 #Guardamos en csv
 if state is None:
-	pandasRet.to_csv(country + "-" + time.strftime("%c") + "-semicolon"  + ".csv", sep = ';')
-	pandasRet.to_csv(country + "-" + time.strftime("%c") +"-comma" + ".csv", sep = ',')
+	pandasRet.to_csv(country + "-Negative-NoRep-" + time.strftime("%c") + "-semicolon"  + ".csv", sep = ';')
+	pandasRet.to_csv(country + "-Negative-NoRep-" + time.strftime("%c") +"-comma" + ".csv", sep = ',')
 else:
-	pandasRet.to_csv(country  + "-" + state + "-" + time.strftime("%c") + "-semicolon"  + ".csv", sep = ';')
-	pandasRet.to_csv(country  + "-" + state + "-" + time.strftime("%c") + "-comma"  + ".csv", sep = ',')
+	pandasRet.to_csv(country  + "-Negative-NoRep-" + state + "-" + time.strftime("%c") + "-semicolon"  + ".csv", sep = ';')
+	pandasRet.to_csv(country  + "-Negative-NoRep-" + state + "-" + time.strftime("%c") + "-comma"  + ".csv", sep = ',')
 
 
 
