@@ -1,0 +1,6 @@
+Enlaces de los tutoriales:
+
+Instalación Ubuntu  y Spark en Windows --> https://sqlseeker.blogspot.com/2021/02/ubuntu-pyspark-install.html
+
+Instalación Biblioteca Pandas en Python 3.0 --> https://varhowto.com/install-pandas-ubuntu-20-04/
+
