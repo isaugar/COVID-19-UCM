@@ -83,11 +83,11 @@ pandasRes.info()
 
 #Guardamos en csv
 if state is None:
-	pandasRes.to_csv(country + "-" + time.strftime("%c") + "-semicolon"  + ".csv", sep = ';')
-	pandasRes.to_csv(country + "-" + time.strftime("%c") +"-comma" + ".csv", sep = ',')
+	pandasRes.to_csv(country + "-NA-NoRep-" + time.strftime("%c") + "-semicolon"  + ".csv", sep = ';')
+	pandasRes.to_csv(country + "-NA-NoRep-" + time.strftime("%c") +"-comma" + ".csv", sep = ',')
 else:
-	pandasRes.to_csv(country  + "-" + state + "-" + time.strftime("%c") + "-semicolon"  + ".csv", sep = ';')
-	pandasRes.to_csv(country  + "-" + state + "-" + time.strftime("%c") + "-comma"  + ".csv", sep = ',')
+	pandasRes.to_csv(country  + "-NA-NoRep-" + state + "-" + time.strftime("%c") + "-semicolon"  + ".csv", sep = ';')
+	pandasRes.to_csv(country  + "-NA-NoRep-" + state + "-" + time.strftime("%c") + "-comma"  + ".csv", sep = ',')
 
 
 
