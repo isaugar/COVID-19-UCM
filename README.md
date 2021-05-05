@@ -29,5 +29,5 @@ Funciones utilizadas:
 
 - Interpolate = Using .interpolate() all daily rows [Only country region filter].
 
-Adicionalmente: se creadaa
+Se han añadido varias guías para facilitar la instalacion y preparación del entorno. 
 
