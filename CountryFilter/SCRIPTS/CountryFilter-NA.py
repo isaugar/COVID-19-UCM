@@ -80,11 +80,11 @@ pandasRet.info()
 
 #Guardamos en csv
 if state is None:
-	pandasRet.to_csv(country + "-" + time.strftime("%c") + "-semicolon"  + ".csv", sep = ';')
-	pandasRet.to_csv(country + "-" + time.strftime("%c") +"-comma" + ".csv", sep = ',')
+	pandasRet.to_csv(country + "-NA-" + time.strftime("%c") + "-semicolon"  + ".csv", sep = ';')
+	pandasRet.to_csv(country + "-NA-" + time.strftime("%c") +"-comma" + ".csv", sep = ',')
 else:
-	pandasRet.to_csv(country  + "-" + state + "-" + time.strftime("%c") + "-semicolon"  + ".csv", sep = ';')
-	pandasRet.to_csv(country  + "-" + state + "-" + time.strftime("%c") + "-comma"  + ".csv", sep = ',')
+	pandasRet.to_csv(country  + "-NA-" + state + "-" + time.strftime("%c") + "-semicolon"  + ".csv", sep = ';')
+	pandasRet.to_csv(country  + "-NA-" + state + "-" + time.strftime("%c") + "-comma"  + ".csv", sep = ',')
 
 
 
