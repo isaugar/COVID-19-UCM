@@ -106,8 +106,8 @@ if state is None:
 	pandasRes.to_csv(country + "-pad-" + time.strftime("%c") + "-semicolon"  + ".csv", sep = ';')
 	pandasRes.to_csv(country + "-pad-" + time.strftime("%c") + "-comma " + ".csv", sep = ',')
 else:
-	pandasRes.to_csv(country  + " " + state + time.strftime("%c") + "-semicolon"  + ".csv", sep = ';')
-	pandasRes.to_csv(country + " " + state + time.strftime("%c") + "-comma " + ".csv", sep = ',')
+	pandasRes.to_csv(country  + "-interpolate-" + state + time.strftime("%c") + "-semicolon"  + ".csv", sep = ';')
+	pandasRes.to_csv(country + "-interpolate-" + state + time.strftime("%c") + "-comma " + ".csv", sep = ',')
 
 
 
