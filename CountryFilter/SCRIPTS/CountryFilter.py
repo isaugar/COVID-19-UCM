@@ -32,8 +32,11 @@ else:
 
 #1 cogemos substring y tranformamos en fecha 
 #2 seleccionamos las columnas que nos interesan
+if country == "US":
+	pandasRet = 	ret.select(col('Country_Region').cast(StringType()),col('Province_State').cast(StringType()),ret['Lat'].cast(FloatType()),ret['Long_'].cast(FloatType()),when(to_date(col("Last_Update"),"M/d/yy").isNotNull(),to_date(col("Last_Update"),"M/d/yy")).otherwise(to_date(col("Last_Update"),"yyyy-MM-dd")).alias("Last_Update1"),ret['Confirmed'].cast(IntegerType()),ret['Deaths'].cast(IntegerType()),ret['Recovered'].cast(IntegerType()),ret['Active'].cast(IntegerType()),ret['People_Tested'].cast(IntegerType()),ret['People_Hospitalized'].cast(IntegerType())).orderBy(col("Country_Region").asc(),col("Province_State").asc(),col("Last_Update1").asc()).na.fill("").toPandas()
 
-pandasRet = ret.select(col('Country_Region').cast(StringType()),col('Province_State').cast(StringType()),ret['Lat'].cast(FloatType()),ret['Long_'].cast(FloatType()),when(to_date(col("Last_Update"),"M/d/yy").isNotNull(),to_date(col("Last_Update"),"M/d/yy")).otherwise(to_date(col("Last_Update"),"yyyy-MM-dd")).alias("Last_Update1"),ret['Confirmed'].cast(IntegerType()),ret['Deaths'].cast(IntegerType()),ret['Recovered'].cast(IntegerType()),ret['Active'].cast(IntegerType())).orderBy(col("Country_Region").asc(),col("Province_State").asc(),col("Last_Update1").asc()).na.fill("").toPandas()
+else:
+	pandasRet = ret.select(col('Country_Region').cast(StringType()),col('Province_State').cast(StringType()),ret['Lat'].cast(FloatType()),ret['Long_'].cast(FloatType()),when(to_date(col("Last_Update"),"M/d/yy").isNotNull(),to_date(col("Last_Update"),"M/d/yy")).otherwise(to_date(col("Last_Update"),"yyyy-MM-dd")).alias("Last_Update1"),ret['Confirmed'].cast(IntegerType()),ret['Deaths'].cast(IntegerType()),ret['Recovered'].cast(IntegerType()),ret['Active'].cast(IntegerType())).orderBy(col("Country_Region").asc(),col("Province_State").asc(),col("Last_Update1").asc()).na.fill("").toPandas()
 
 
 
@@ -61,6 +64,14 @@ pandasRet.loc[(pandasRet['Country_Region'] == pandasRet['Country_Region'].shift(
 pandasRet.loc[(pandasRet['Country_Region'] != pandasRet['Country_Region'].shift(1)) | (pandasRet['Province_State'] != pandasRet['Province_State'].shift(1)), 'Daily_Active'] = pandasRet['Active']
 
 
+#Calculo columnas extra de las tablas de USA (People_Tested,People_Hospitalized)
+if country == "US": 
+	pandasRet.loc[(pandasRet['Country_Region'] == pandasRet['Country_Region'].shift(1)) & ((pandasRet['Province_State'] == pandasRet['Province_State'].shift(1)) | (pandasRet['Province_State'] == "")  ) , 'Daily_Tested'] = pandasRet['People_Tested'] - pandasRet['People_Tested'].shift(1)
+	pandasRet.loc[(pandasRet['Country_Region'] != pandasRet['Country_Region'].shift(1)) | (pandasRet['Province_State'] != pandasRet['Province_State'].shift(1)), 'Daily_Tested'] = pandasRet['People_Tested']
+
+	pandasRet.loc[(pandasRet['Country_Region'] == pandasRet['Country_Region'].shift(1)) & ((pandasRet['Province_State'] == pandasRet['Province_State'].shift(1)) | (pandasRet['Province_State'] == "")  ) , 'Daily_Hospitalized'] = pandasRet['People_Hospitalized'] - pandasRet['People_Hospitalized'].shift(1)
+	pandasRet.loc[(pandasRet['Country_Region'] != pandasRet['Country_Region'].shift(1)) | (pandasRet['Province_State'] != pandasRet['Province_State'].shift(1)), 'Daily_Hospitalized'] = pandasRet['People_Hospitalized']
+
 
 
 #Eliminamos fechas repetidas de los csv cuando no se daban datos diarios
@@ -74,6 +85,12 @@ pandasRes.loc[(pandasRet['Daily_Deaths']) < 0, 'Daily_Deaths' ] = np.NaN
 
 pandasRes.loc[(pandasRet['Daily_Confirmed']) < 0, 'Daily_Confirmed' ] = np.NaN
 
+if country == "US":
+
+	pandasRes.loc[(pandasRet['Daily_Tested']) < 0, 'Daily_Tested' ] = np.NaN
+
+	pandasRes.loc[(pandasRet['Daily_Hospitalized']) < 0, 'Daily_Hospitalized' ] = np.NaN
+
 
 
 #con la funcion pad() usamos el primer valor no nulo anterior
@@ -86,6 +103,10 @@ if state is None:
 	pandasRes['Daily_Deaths'] = pandasRes['Daily_Deaths'].pad()
 
 	pandasRes['Daily_Confirmed'] = pandasRes['Daily_Confirmed'].pad()
+
+	if country == "US":
+		pandasRes['Daily_Tested'] = pandasRes['Daily_Tested'].pad()
+		pandasRes['Daily_Hospitalized'] = pandasRes['Daily_Hospitalized'].pad()
 else:
 	pandasRes['Daily_Recovered'] = pandasRes['Daily_Recovered'].interpolate().round(0)
 
@@ -93,8 +114,12 @@ else:
 
 	pandasRes['Daily_Confirmed'] = pandasRes['Daily_Confirmed'].interpolate().round(0)
 
+	if country == "US":
+		pandasRes['Daily_Tested'] = pandasRes['Daily_Tested'].interpolate().round(0)
+		pandasRes['Daily_Hospitalized'] = pandasRes['Daily_Hospitalized'].interpolate().round(0)
+
 #Calculo Tasa incidencia
-pandasRes["IP"] = (pandasRet["Daily_Confirmed"] + pandasRet["Daily_Deaths"]) - pandasRet["Daily_Recovered"]
+pandasRes["IP"] = (pandasRes["Daily_Confirmed"] + pandasRes["Daily_Deaths"]) - pandasRes["Daily_Recovered"]
 
 
 #Comprobamos tipos y si se han devuelto datos
@@ -103,11 +128,9 @@ pandasRes.info()
 
 #Guardamos en csv
 if state is None:
-	pandasRes.to_csv(country + "-pad-" + time.strftime("%c") + "-semicolon"  + ".csv", sep = ';')
-	pandasRes.to_csv(country + "-pad-" + time.strftime("%c") + "-comma " + ".csv", sep = ',')
+	pandasRes.to_csv(country + "-Pad-"  + ".csv")
 else:
-	pandasRes.to_csv(country  + "-interpolate-" + state + time.strftime("%c") + "-semicolon"  + ".csv", sep = ';')
-	pandasRes.to_csv(country + "-interpolate-" + state + time.strftime("%c") + "-comma " + ".csv", sep = ',')
+	pandasRes.to_csv(country  + "-Interpolate-" + state + ".csv")
 
 
 

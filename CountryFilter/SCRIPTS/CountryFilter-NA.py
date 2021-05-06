@@ -34,7 +34,11 @@ else:
 #1 cogemos substring y tranformamos en fecha 
 #2 seleccionamos las columnas que nos interesan
 
-pandasRet = ret.select(col('Country_Region').cast(StringType()),col('Province_State').cast(StringType()),ret['Lat'].cast(FloatType()),ret['Long_'].cast(FloatType()),when(to_date(col("Last_Update"),"M/d/yy").isNotNull(),to_date(col("Last_Update"),"M/d/yy")).otherwise(to_date(col("Last_Update"),"yyyy-MM-dd")).alias("Last_Update1"),ret['Confirmed'].cast(IntegerType()),ret['Deaths'].cast(IntegerType()),ret['Recovered'].cast(IntegerType()),ret['Active'].cast(IntegerType())).orderBy(col("Country_Region").asc(),col("Province_State").asc(),col("Last_Update1").asc()).na.fill("").toPandas()
+if country == "US":
+	pandasRet = 	ret.select(col('Country_Region').cast(StringType()),col('Province_State').cast(StringType()),ret['Lat'].cast(FloatType()),ret['Long_'].cast(FloatType()),when(to_date(col("Last_Update"),"M/d/yy").isNotNull(),to_date(col("Last_Update"),"M/d/yy")).otherwise(to_date(col("Last_Update"),"yyyy-MM-dd")).alias("Last_Update1"),ret['Confirmed'].cast(IntegerType()),ret['Deaths'].cast(IntegerType()),ret['Recovered'].cast(IntegerType()),ret['Active'].cast(IntegerType()),ret['People_Tested'].cast(IntegerType()),ret['People_Hospitalized'].cast(IntegerType())).orderBy(col("Country_Region").asc(),col("Province_State").asc(),col("Last_Update1").asc()).na.fill("").toPandas()
+
+else:
+	pandasRet = ret.select(col('Country_Region').cast(StringType()),col('Province_State').cast(StringType()),ret['Lat'].cast(FloatType()),ret['Long_'].cast(FloatType()),when(to_date(col("Last_Update"),"M/d/yy").isNotNull(),to_date(col("Last_Update"),"M/d/yy")).otherwise(to_date(col("Last_Update"),"yyyy-MM-dd")).alias("Last_Update1"),ret['Confirmed'].cast(IntegerType()),ret['Deaths'].cast(IntegerType()),ret['Recovered'].cast(IntegerType()),ret['Active'].cast(IntegerType())).orderBy(col("Country_Region").asc(),col("Province_State").asc(),col("Last_Update1").asc()).na.fill("").toPandas()
 
 
 
@@ -58,6 +62,16 @@ pandasRet.loc[(pandasRet['Country_Region'] != pandasRet['Country_Region'].shift(
 pandasRet.loc[(pandasRet['Country_Region'] == pandasRet['Country_Region'].shift(1)) & ((pandasRet['Province_State'] == pandasRet['Province_State'].shift(1)) | (pandasRet['Province_State'] == "")  ) , 'Daily_Active'] = pandasRet['Active'] - pandasRet['Active'].shift(1)
 pandasRet.loc[(pandasRet['Country_Region'] != pandasRet['Country_Region'].shift(1)) | (pandasRet['Province_State'] != pandasRet['Province_State'].shift(1)), 'Daily_Active'] = pandasRet['Active']
 
+
+#Calculo columnas extra de las tablas de USA (People_Tested,People_Hospitalized)
+if country == "US": 
+	pandasRet.loc[(pandasRet['Country_Region'] == pandasRet['Country_Region'].shift(1)) & ((pandasRet['Province_State'] == pandasRet['Province_State'].shift(1)) | (pandasRet['Province_State'] == "")  ) , 'Daily_Tested'] = pandasRet['People_Tested'] - pandasRet['People_Tested'].shift(1)
+	pandasRet.loc[(pandasRet['Country_Region'] != pandasRet['Country_Region'].shift(1)) | (pandasRet['Province_State'] != pandasRet['Province_State'].shift(1)), 'Daily_Tested'] = pandasRet['People_Tested']
+
+	pandasRet.loc[(pandasRet['Country_Region'] == pandasRet['Country_Region'].shift(1)) & ((pandasRet['Province_State'] == pandasRet['Province_State'].shift(1)) | (pandasRet['Province_State'] == "")  ) , 'Daily_Hospitalized'] = pandasRet['People_Hospitalized'] - pandasRet['People_Hospitalized'].shift(1)
+	pandasRet.loc[(pandasRet['Country_Region'] != pandasRet['Country_Region'].shift(1)) | (pandasRet['Province_State'] != pandasRet['Province_State'].shift(1)), 'Daily_Hospitalized'] = pandasRet['People_Hospitalized']
+
+
 #con esto ponemos a Null los valores incoherente (que son menores que los anteriores siendo acumulados)
 
 #Descomentar si se quiere poner a null tambien los valores acumulados menores a los del dia anterior
@@ -68,6 +82,13 @@ pandasRet.loc[(pandasRet['Country_Region'] != pandasRet['Country_Region'].shift(
 pandasRet.loc[(pandasRet['Daily_Recovered']) < 0, 'Daily_Recovered' ] = np.NaN
 pandasRet.loc[(pandasRet['Daily_Deaths']) < 0, 'Daily_Deaths' ] = np.NaN
 pandasRet.loc[(pandasRet['Daily_Confirmed']) < 0, 'Daily_Confirmed' ] = np.NaN
+
+if country == "US":
+
+	pandasRet.loc[(pandasRet['Daily_Tested']) < 0, 'Daily_Tested' ] = np.NaN
+
+	pandasRet.loc[(pandasRet['Daily_Hospitalized']) < 0, 'Daily_Hospitalized' ] = np.NaN
+
 
 #Calculo Tasa incidencia
 pandasRet["IP"] = (pandasRet["Daily_Confirmed"] + pandasRet["Daily_Deaths"]) - pandasRet["Daily_Recovered"]
@@ -80,11 +101,11 @@ pandasRet.info()
 
 #Guardamos en csv
 if state is None:
-	pandasRet.to_csv(country + "-NA-" + time.strftime("%c") + "-semicolon"  + ".csv", sep = ';')
-	pandasRet.to_csv(country + "-NA-" + time.strftime("%c") +"-comma" + ".csv", sep = ',')
+	pandasRet.to_csv(country + "-NaN-" + time.strftime("%c") + "-semicolon"  + ".csv", sep = ';')
+	pandasRet.to_csv(country + "-NaN-" + time.strftime("%c") +"-comma" + ".csv", sep = ',')
 else:
-	pandasRet.to_csv(country  + "-NA-" + state + "-" + time.strftime("%c") + "-semicolon"  + ".csv", sep = ';')
-	pandasRet.to_csv(country  + "-NA-" + state + "-" + time.strftime("%c") + "-comma"  + ".csv", sep = ',')
+	pandasRet.to_csv(country  + "-NaN-" + state + "-" + time.strftime("%c") + "-semicolon"  + ".csv", sep = ';')
+	pandasRet.to_csv(country  + "-NaN-" + state + "-" + time.strftime("%c") + "-comma"  + ".csv", sep = ',')
 
 
 
