@@ -20,6 +20,8 @@ Ejecución de Scripts:
 
 <b> spark-submit [direccion/nombre:script.py] [argumentos]</b>
 
+- Si el nombre es compuesto, por ejemplo New York, hay que ponerlo entre comillas "New York"
+
 Ejemplos:
 - spark-submit ./CountryFilter-NA.py Spain Madrid  [Esto ejecutará el comando que filtra por pais (Spain) y permite filtar por comunidad también (Madrid)]
 
