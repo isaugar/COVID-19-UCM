@@ -1,0 +1,1 @@
+US_NaN_NoRep_Wed_May_12_08_26_16_2021_comma$IPMM <- US_NaN_NoRep_Wed_May_12_08_26_16_2021_comma$Daily_MuertosMM + US_NaN_NoRep_Wed_May_12_08_26_16_2021_comma$Daily_ConfirmedMM - US_NaN_NoRep_Wed_May_12_08_26_16_2021_comma$Daily_RecuperadosMM
