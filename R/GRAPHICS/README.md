@@ -1,9 +1,7 @@
 
 GRAFICAS COVID-19 UCM
 
-========================================================================================================
-
-Archivos:
+FUNCTIONS:
 
 -graficas.R
 -graficasFinal.R
