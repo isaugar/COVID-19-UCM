@@ -33,7 +33,7 @@ Funciones utilizadas:
 
 - Interpolate = Using .interpolate() all daily rows [Only country region filter].
 
-- R0 : confirmados diarios / confirmados diarios - 14
+- R0 = confirmados diarios / confirmados diarios - 14
 
-- \forall i\ \geq \ 4,x_{i} =\frac{1}{7} \ \sum\limits _{k\ =\ \ i\ -3}^{i\ +3} x_{i}\\
+- Media Movil (MM) = Para cada posición, se calcula una media con la posición tres días antes y tres días despues.
 
