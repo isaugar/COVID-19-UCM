@@ -9,11 +9,11 @@ Este repositorio esta constituido por cinco directorios:
 
 - World whitout USA: Los datos de todo el mundo, agrupados por pais y región, a excepción de USA.
 
-- USA-State: los datos de USA, agrupados por estados. 
+- USA-State: Los datos de USA, agrupados por estados. 
 
 -	CountryFilter/RegionOptional: Filtro para generar los datos de un país o la región de un país en concreto. 
 
-- R: funciones para calcular variables adicionales.
+- R: Formado por script y funciones para calcular, el algoritmo K-Means, gráficas y variables adicionales.
 
 Los directorios World whitout USA, USA-State, CountryFilter/RegionOptional a su vez esta formado por:
 
@@ -33,7 +33,7 @@ Funciones utilizadas:
 
 - Interpolate = Using .interpolate() all daily rows [Only country region filter].
 
-- R0 = confirmados diarios / confirmados diarios - 14
+- R0 = Confirmados diarios / confirmados diarios - 14
 
 - Media Movil (MM) = Para cada posición, se calcula una media con la posición tres días antes y tres días despues.
 
